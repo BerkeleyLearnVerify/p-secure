@@ -1,0 +1,3 @@
+[submodule "OTP-SGX-Server"]
+	path = OTP-SGX-Server
+	url = https://github.com/ShivKushwah/OTP-SGX-Server.git
