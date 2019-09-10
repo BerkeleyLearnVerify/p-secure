@@ -92,34 +92,37 @@ spec M observes Success {
     }
 }
 
-fun _CREATEMACHINE(cner: machine, typeOfMachine: int, param : any, newMachine: machine) : machine
-{
-	if(typeOfMachine == 1)
-	{
-		newMachine = new BANK_SERVER(param);
-	}
-	else if(typeOfMachine == 2)
-	{
-		newMachine = new CLIENT_OTP_GENERATOR();
-	}
-	else
-	{
-		assert(false);
-	}
-	return newMachine;
-}
-
 machine IntializerMachine
 {
-	var container : machine;
     var clientMachine: machine;
+	var bankMachine: machine;
 
     start state Init {
 	    entry {
-			container = _CREATECONTAINER();
-			clientMachine = _CREATEMACHINE(container, 2, null, null as machine);
-			container = _CREATECONTAINER();
-			_CREATEMACHINE(container, 1, clientMachine, null as machine); //Create bank server
+			clientMachine = new CLIENT_OTP_GENERATOR();
+			bankMachine = new BANK_SERVER(clientMachine);
 	    }
 	}
 }
+
+
+fun _CREATECONTAINER() : machine
+{
+	var retVal : machine;
+	retVal = new Container();
+	return retVal;
+}
+
+
+machine Container {
+	start state Init {
+		
+	}
+}
+
+
+
+
+
+
+
