@@ -4,3 +4,6 @@
 [submodule "OTP-Server-P-Language-Sample"]
 	path = OTP-Server-P-Language-Sample
 	url = https://github.com/ShivKushwah/OTP-Server-P-Language-Sample.git
+[submodule "P"]
+	path = P
+	url = https://github.com/p-org/P.git
