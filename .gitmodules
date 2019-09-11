@@ -1,9 +1,6 @@
 [submodule "OTP-SGX-Server"]
 	path = OTP-SGX-Server
 	url = https://github.com/ShivKushwah/OTP-SGX-Server.git
-[submodule "OTP-Server-P-Language-Sample"]
-	path = OTP-Server-P-Language-Sample
-	url = https://github.com/ShivKushwah/OTP-Server-P-Language-Sample.git
 [submodule "P"]
 	path = P
 	url = https://github.com/p-org/P.git
