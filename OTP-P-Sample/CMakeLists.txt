@@ -1,8 +1,9 @@
 cmake_minimum_required (VERSION 3.1)
 project (P)
 set(projectName OTPServer)
+set(CMAKE_BUILD_TYPE Debug)
 find_package (Threads)
-include_directories(~/Research/P/Bld/Drops/Prt/include)
+include_directories(${CMAKE_SOURCE_DIR}/../../../Bld/Drops/Prt/include)
 add_executable(otp_server
 	OTPServer.c
 	OTPServer.h

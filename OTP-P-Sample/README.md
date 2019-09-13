@@ -2,9 +2,7 @@
 
 Commands Needed to Run:
 
-`dotnet ~/Research/P/Bld/Drops/Release/Binaries/Pc.dll *.p && cmake CMakeLists.txt && make && ./ping_pong`
-
-`./ping_pong`
+`dotnet ~/Research/P/Bld/Drops/Release/Binaries/Pc.dll *.p && cmake CMakeLists.txt && make && ./otp_server`
 
 
 Output:
@@ -84,4 +82,3 @@ RaiseLog> Machine BANK_SERVER(5) raised event Success with payload null
 ExitLog> Machine BANK_SERVER(5) exiting state BANK_SERVER.ValidateOTPCode
   
 StateLog> Machine BANK_SERVER(5) entered state BANK_SERVER.Done
-

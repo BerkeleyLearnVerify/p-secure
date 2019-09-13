@@ -19,31 +19,6 @@ Also note that the machine hosting the main machine does not host container mach
 
 static char* FirstArgument = NULL;
 
-char* GetApplicationName()
-{
-	char* last = strrchr(FirstArgument, '/');
-	char* last2 = strrchr(FirstArgument, '\\');
-
-	if (last != NULL)
-	{
-		return last + 1;
-	}
-	if (last2 != NULL)
-	{
-		return last2 + 1;
-	}
-	return FirstArgument;
-}
-
-void PrintUsage()
-{
-	printf("Usage: %s clusterConfigFile createMain processId nodeId\n", GetApplicationName());
-	printf("Where:\n");
-	printf("  clusterConfigFile points to the cluser config xml file.\n");
-	printf("  createMain (true if 1 and false if 0)\n");
-	printf("  processId the id of the process we are talking to\n");
-	printf("  nodeid (0 is localhost)\n");
-}
 
 void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST* ptr)
 {

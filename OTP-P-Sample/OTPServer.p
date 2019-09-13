@@ -1,15 +1,16 @@
 event Success;
 event Failure;
 
-event OTPSecretMsg assert 1: (machine, int);
+event OTPSecretMsg: (machine, int);
 event OTPSecretReceived;
-event OTPCodeMsg assert 1: int;
+event OTPCodeMsg: int;
 event OTPCodeValidated;
 event OTPCodeFailed;
 
 machine BANK_SERVER 
 {
     var clientOtpGenerator: machine;
+	var secret: int;
 
     // This is the entry point.
     start state Init {
@@ -23,7 +24,6 @@ machine BANK_SERVER
     state GenerateOTPSecret {
         entry {
 			// generate OTP secret 
-			var secret : int;
 			secret = 123456788;
 			send clientOtpGenerator, OTPSecretMsg, (this, secret);
 	    }
@@ -54,7 +54,7 @@ machine BANK_SERVER
 
 machine CLIENT_OTP_GENERATOR
 {
-	var bankServer : machine;
+	var bankServer: machine;
 	var OTPSecret: int;
 
     start state Init {
@@ -86,12 +86,6 @@ machine CLIENT_OTP_GENERATOR
 	}
 }
 
-spec M observes Success {
-    start state initialState {
-
-    }
-}
-
 machine IntializerMachine
 {
     var clientMachine: machine;
@@ -99,23 +93,8 @@ machine IntializerMachine
 
     start state Init {
 	    entry {
-			clientMachine = new CLIENT_OTP_GENERATOR();
+            clientMachine = new CLIENT_OTP_GENERATOR();
 			bankMachine = new BANK_SERVER(clientMachine);
 	    }
-	}
-}
-
-
-fun _CREATECONTAINER() : machine
-{
-	var retVal : machine;
-	retVal = new Container();
-	return retVal;
-}
-
-
-machine Container {
-	start state Init {
-		
 	}
 }
