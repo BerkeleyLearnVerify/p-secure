@@ -1,6 +1,3 @@
-event Success;
-event Failure;
-
 event OTPSecretMsg: (machine, int);
 event OTPSecretReceived;
 event OTPCodeMsg: int;
@@ -16,9 +13,8 @@ machine BANK_SERVER
     start state Init {
         entry (payload:any) {
           clientOtpGenerator = payload as machine;
-          raise (Success);   	   
+          goto GenerateOTPSecret;   	   
         }
-        on Success goto GenerateOTPSecret;
     }
 
     state GenerateOTPSecret {
@@ -39,14 +35,12 @@ machine BANK_SERVER
 		  // validate OTP code
 		  if (payload == 123456789) {
 			send clientOtpGenerator, OTPCodeValidated;
-          	raise (Success);  
+          	goto Done;  
 		  } else  {
 			send clientOtpGenerator, OTPCodeFailed;
-			raise (Failure);
+			goto WaitOTPCode;
 		  }  
         }
-		on Success goto Done;
-		on Failure goto WaitOTPCode;
      }
 
      state Done {}
@@ -66,9 +60,8 @@ machine CLIENT_OTP_GENERATOR
 	        bankServer = payload.0;
 			OTPSecret = payload.1;
 			send bankServer, OTPSecretReceived;
-			raise (Success);	 	  
+			goto GenerateOTPCode;	 	  
 	    }
-        on Success goto GenerateOTPCode;
     }
 
 	state GenerateOTPCode {

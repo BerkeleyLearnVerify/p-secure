@@ -19,7 +19,7 @@ CreateLog> Machine BANK_SERVER(3) is created
 
 StateLog> Machine BANK_SERVER(3) entered state BANK_SERVER.Init
 
-RaiseLog> Machine BANK_SERVER(3) raised event Success with payload null
+GotoLog> Machine BANK_SERVER(3) goes to state BANK_SERVER.GenerateOTPSecret with payload null
 
 ExitLog> Machine BANK_SERVER(3) exiting state BANK_SERVER.Init
 
@@ -35,7 +35,7 @@ StateLog> Machine CLIENT_OTP_GENERATOR(2) entered state CLIENT_OTP_GENERATOR.Han
 
 EnqueueLog> Enqueued event OTPSecretReceived with payload null on Machine BANK_SERVER(3)
 
-RaiseLog> Machine CLIENT_OTP_GENERATOR(2) raised event Success with payload null
+GotoLog> Machine CLIENT_OTP_GENERATOR(2) goes to state CLIENT_OTP_GENERATOR.GenerateOTPCode with payload null
 
 ExitLog> Machine CLIENT_OTP_GENERATOR(2) exiting state CLIENT_OTP_GENERATOR.HandleOTPSecret
 
@@ -69,7 +69,7 @@ ExitLog> Machine CLIENT_OTP_GENERATOR(2) exiting state CLIENT_OTP_GENERATOR.End
 
 HaltLog> Machine CLIENT_OTP_GENERATOR(2) halted in state CLIENT_OTP_GENERATOR.End
 
-RaiseLog> Machine BANK_SERVER(3) raised event Success with payload null
+GotoLog> Machine BANK_SERVER(3) goes to state BANK_SERVER.Done with payload null
 
 ExitLog> Machine BANK_SERVER(3) exiting state BANK_SERVER.ValidateOTPCode
 
