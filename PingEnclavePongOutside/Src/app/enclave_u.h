@@ -20,6 +20,10 @@ extern "C" {
 #define OCALL_PRINT_DEFINED__
 void SGX_UBRIDGE(SGX_NOCONVENTION, ocall_print, (const char* str));
 #endif
+#ifndef OCALL_SEND_PONG_DEFINED__
+#define OCALL_SEND_PONG_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, ocall_send_pong, (void));
+#endif
 #ifndef SGX_OC_CPUIDEX_DEFINED__
 #define SGX_OC_CPUIDEX_DEFINED__
 void SGX_UBRIDGE(SGX_CDECL, sgx_oc_cpuidex, (int cpuinfo[4], int leaf, int subleaf));
@@ -42,6 +46,7 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (cons
 #endif
 
 sgx_status_t enclave_main(sgx_enclave_id_t eid, int* retval);
+sgx_status_t send_ping_enclave(sgx_enclave_id_t eid, int* retval);
 
 #ifdef __cplusplus
 }

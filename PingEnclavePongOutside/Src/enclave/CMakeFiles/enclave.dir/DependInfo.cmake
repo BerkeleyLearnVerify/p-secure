@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/PGenerated/PingPong.c" "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/CMakeFiles/enclave.dir/__/__/PGenerated/PingPong.c.o"
+  "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/PGenerated/PingPongEnclave.c" "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/CMakeFiles/enclave.dir/__/__/PGenerated/PingPongEnclave.c.o"
   "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/enclave.c" "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/CMakeFiles/enclave.dir/enclave.c.o"
   "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/enclave_t.c" "/home/shiv/Research/temp-del/ProgrammingEnclaves/Samples/PingEnclavePongOutside/Src/enclave/CMakeFiles/enclave.dir/enclave_t.c.o"
   )
@@ -18,7 +18,6 @@ set(CMAKE_TARGET_DEFINITIONS_C
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
-  "Submodule/P/Bld/Drops/Prt/include"
   "Samples/PingEnclavePongOutside/Src/enclave"
   "/home/shiv/Research/Intel-SGX-Installation/linux-sgx/linux/installer/bin/sgxsdk/include"
   "/home/shiv/Research/Intel-SGX-Installation/linux-sgx/linux/installer/bin/sgxsdk/include/tlibc"

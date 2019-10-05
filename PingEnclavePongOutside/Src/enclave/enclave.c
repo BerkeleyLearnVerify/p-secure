@@ -1,4 +1,6 @@
-#include "PingPong.h"
+#include "PingPongEnclave.h"
+
+PRT_PROCESS *process;
 
 void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST *ptr)
 {
@@ -35,8 +37,6 @@ void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST *ptr)
 
 
 }
-
-
 
 static PRT_BOOLEAN cooperative = PRT_FALSE;
 static int threads = 1;
@@ -113,14 +113,31 @@ static void RunToIdle(void* process)
 	}
 }
 
+void P_SecureSend_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+{
+    ocall_send_pong();
+}
+
+int send_ping_enclave(void) {
+
+    PRT_VALUE* pingEvent = PrtMkEventValue(PrtPrimGetEvent(&P_EVENT_Ping.value));
+    PRT_MACHINEID pongId;
+    pongId.machineId = 1;
+
+    PRT_MACHINEINST* pongMachine = PrtGetMachine(process, PrtMkMachineValue(pongId));
+    PrtSend(NULL, pongMachine, pingEvent, 0);
+    return 0;
+
+}
+
+
 extern int Delta;
 
 int enclave_main(void)
 {
     ocall_print("hello, world!\n");
-	PRT_DBG_START_MEM_BALANCED_REGION
-	{
-		PRT_PROCESS *process;
+	//PRT_DBG_START_MEM_BALANCED_REGION
+	//{
 		PRT_GUID processGuid;
 		PRT_VALUE *payload;
 
@@ -137,20 +154,23 @@ int enclave_main(void)
 		if (parg == NULL)
 		{
 			payload = PrtMkNullValue();
+
 		}
 		else
 		{
 			int i = atoi(parg);
 			payload = PrtMkIntValue(i);
+            
 		}
 
 		PrtUpdateAssertFn(MyAssert);
         ocall_print("after update assert fn!\n");
 
-        PRT_UINT32 mainMachine = 0;
-		PRT_BOOLEAN foundMachine = PrtLookupMachineByName("Main", &mainMachine);
-		PrtAssert(foundMachine, "No 'Main' machine found!");
-		PrtMkMachine(process, mainMachine, 1, &payload);
+        PRT_UINT32 mainMachine2 = 1;
+		PRT_BOOLEAN foundMachine2 = PrtLookupMachineByName("Pong", &mainMachine2);
+		PrtAssert(foundMachine2, "No 'Pong' machine found!");
+		PRT_MACHINEINST* pongMachine = PrtMkMachine(process, mainMachine2, 1, &payload);
+
         ocall_print("after mk machine!\n");
 
         if (cooperative)
@@ -169,11 +189,4 @@ int enclave_main(void)
             }
             */
         }
-		PrtFreeValue(payload);
-		PrtStopProcess(process);
-	}
-	PRT_DBG_END_MEM_BALANCED_REGION
-
-	//_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
-	//_CrtDumpMemoryLeaks();
 }

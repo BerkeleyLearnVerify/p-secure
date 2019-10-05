@@ -1,46 +1,30 @@
-event Ping assert 1 : machine;
-event Pong assert 1;
+event Ping assert 2;
+event Pong assert 2;
+fun SecureSend();
 event Success;
 
-machine Main {
+machine Ping {
     var pongId: machine;
 
     start state Ping_Init {
         entry {
-      	    pongId = new PONG();
     	    raise Success;   	   
         }
-        on Success goto Ping_SendPing;
+        on Success goto Ping_SendingPing;
     }
 
-    state Ping_SendPing {
+    state Ping_SendingPing {
         entry {
-    	    send pongId, Ping, this;
+            SecureSend(); //Send Ping to the enclave's Pong machine
     	    raise Success;
-	}
+	    }
         on Success goto Ping_WaitPong;
-     }
-
-     state Ping_WaitPong {
-        on Pong goto Done;
-     }
-
-    state Done { }
-}
-
-machine PONG {
-    start state Pong_WaitPing {
-        entry { }
-        on Ping goto Pong_SendPong;
     }
 
-    state Pong_SendPong {
-	entry (payload: machine) {
-	     send payload, Pong;
-	     raise Success;		 	  
-	}
-        on Success goto Done;
+    state Ping_WaitPong {
+        on Pong goto Done; //Receives this message from the Pong machine in the enclave
     }
 
-    state Done { }
+    state Done {  }
+
 }
