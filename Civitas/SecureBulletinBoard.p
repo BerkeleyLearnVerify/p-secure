@@ -7,11 +7,11 @@ Secure Bulletin Board machine
 
 secure_machine SecureBulletinBoardMachine
 {
-    var electionResults: map[int, int];
+    var electionResults: map[int, secure_int];
     
     start state Init {
         defer TRUSTEDeGetElectionResults;
-        on TRUSTEDeElectionResults do (payload: map[int, int]) {
+        on TRUSTEDeElectionResults do (payload: map[int, secure_int]) {
             electionResults = payload;
             goto SendResults;
         }
@@ -21,9 +21,9 @@ secure_machine SecureBulletinBoardMachine
         on TRUSTEDeGetElectionResults do (payload: (requestingMachine: machine_handle, requestingMachineCapability: capability)){
             var electionResultsKeys : seq[int];
             var i : int;
-            var countCandidate0 : int;
-            var countCandidate1 : int;
-            var winner : int;
+            var countCandidate0 : secure_int;
+            var countCandidate1 : secure_int;
+            var winner : secure_int;
 
             SaveCapability(payload.requestingMachineCapability);
             electionResultsKeys = keys(electionResults);
@@ -40,8 +40,8 @@ secure_machine SecureBulletinBoardMachine
                 }
                 i = i + 1;
             }
-            print "Count 0 - {0}", countCandidate0;
-            print "Count 1 - {0}", countCandidate1;
+            // print "Count 0 - {0}", countCandidate0;
+            // print "Count 1 - {0}", countCandidate1;
             if (countCandidate0 > countCandidate1) {
                 winner = 0;
             } else if (countCandidate1 > countCandidate0) {
